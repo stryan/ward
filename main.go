@@ -15,12 +15,16 @@ func main() {
 	state := newState()
 	s := &Services{}
 	i := &Ip{}
+	st := &Stats{}
 	s.Init()
 	s.Update()
 	i.Init()
 	i.Update()
+	st.Init()
+	st.Update()
 	state.registerModule(s)
 	state.registerModule(i)
+	state.registerModule(st)
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", state.PrintRaw).Methods("GET")
 	router.HandleFunc("/module/{name}", state.handleModule).Methods("GET")

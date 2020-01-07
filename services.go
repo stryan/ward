@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/coreos/go-systemd/v22/dbus"
+	"github.com/spf13/viper"
 )
 
 type Services struct {
@@ -12,7 +13,7 @@ type Services struct {
 }
 
 func (s *Services) Init() bool {
-	s.watched = []string{"sshd.service", "brtfs.service", "mariadb.service"}
+	s.watched = viper.GetStringSlice("services.watched")
 	s.states = make(map[string]string)
 	for _, service := range s.watched {
 		s.states[service] = "Unknown"

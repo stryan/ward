@@ -3,12 +3,15 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 )
 
 type State struct {
 	modules map[string]Module
+	Delta   time.Duration
+	Port    string
 }
 
 func newState() *State {
@@ -41,5 +44,14 @@ func (s *State) PrintRaw(w http.ResponseWriter, req *http.Request) {
 	for _, i := range s.modules {
 		w.Write(i.Output())
 		fmt.Fprintf(w, "\n")
+	}
+}
+
+func (s *State) UpdateChecks() {
+	for true {
+		time.Sleep(s.Delta * time.Second)
+		for _, i := range s.modules {
+			i.Update()
+		}
 	}
 }

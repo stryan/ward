@@ -30,6 +30,7 @@ func (s *State) handleModule(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	if val, ok := s.modules[modName]; ok {
 		w.Write(val.Output())
+		return
 	}
 	http.NotFound(w, req)
 }
@@ -40,6 +41,7 @@ func (s *State) handleModuleOutput(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	if val, ok := s.modules[modName]; ok {
 		w.Write(val.Output(outName))
+		return
 	}
 	http.NotFound(w, req)
 }

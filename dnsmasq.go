@@ -30,7 +30,7 @@ func (d *Dnsmasq) Path() string {
 }
 
 func (d *Dnsmasq) Update() bool {
-	file, err := os.Open("test.txt")
+	file, err := os.Open("/var/lib/misc/dnsmasq.leases")
 
 	if err != nil {
 		log.Printf("Dnsmasq:failed opening file: %s", err)

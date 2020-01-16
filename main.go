@@ -39,6 +39,11 @@ func setup() *State {
 		st.Init()
 		state.registerModule(st)
 	}
+	if viper.IsSet("dnsmasq") && viper.GetBool("dnsmasq.active") {
+		d := &Dnsmasq{}
+		d.Init()
+		state.registerModule(d)
+	}
 	for _, i := range state.modules {
 		i.Update()
 	}

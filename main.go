@@ -70,7 +70,7 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
-
+	go state.UpdateChecks()
 	<-stop
 
 	log.Println("Removing Wards")

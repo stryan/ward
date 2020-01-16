@@ -28,15 +28,20 @@ func (s *State) registerModule(m Module) {
 func (s *State) handleModule(w http.ResponseWriter, req *http.Request) {
 	modName := mux.Vars(req)["name"]
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(s.modules[modName].Output())
+	if val, ok := s.modules[modName]; ok {
+		w.Write(val.Output())
+	}
+	http.NotFound(w, req)
 }
 
 func (s *State) handleModuleOutput(w http.ResponseWriter, req *http.Request) {
 	modName := mux.Vars(req)["name"]
 	outName := mux.Vars(req)["output"]
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(s.modules[modName].Output(outName))
-
+	if val, ok := s.modules[modName]; ok {
+		w.Write(val.Output(outName))
+	}
+	http.NotFound(w, req)
 }
 
 func (s *State) PrintRaw(w http.ResponseWriter, req *http.Request) {
